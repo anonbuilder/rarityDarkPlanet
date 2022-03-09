@@ -2,13 +2,15 @@
 pragma solidity ^0.8.7;
 
 import "../interfaces/IAdventureTime.sol";
+import "../interfaces/IDPMasterChef.sol";
 
 
 contract DaycareManager {
 
 
-    IAdventureTime adventureTime =
-        IAdventureTime(0x0D4C98901563ca730332e841EDBCB801fe9F2551);
+    IAdventureTime adventureTime = IAdventureTime(0x0D4C98901563ca730332e841EDBCB801fe9F2551);
+    IDPMasterChef DPMasterChef = IDPMasterChef(0xa2920Cebe8d86C7EB5dF48BCc5B9d603Ff73f4D9);
+    
     uint256 public constant DAILY_FEE = 0.07 * 1e18;
     address owner;
        
@@ -32,6 +34,11 @@ contract DaycareManager {
         require(whitelist[msg.sender] == true);
         _; 
     }
+    modifier isDPOwner() {
+        (uint256  _amount, , , , ) = DPMasterChef.userInfo(0, msg.sender);
+        require( _amount > 400000000000000000000);
+        _; 
+    }
     modifier ownerOnly() {
         require(msg.sender == owner);
         _; 
@@ -52,7 +59,7 @@ contract DaycareManager {
     function registerDaycare(
         uint256[] calldata _summonerIds,
         uint256[] calldata _days
-    ) external payable {
+    ) isDPOwner external payable {
         uint256 len = _summonerIds.length;
         require(len == _days.length, "DCM: Invalid lengths");
         uint256 totalFee = 0;
