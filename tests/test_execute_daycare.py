@@ -6,7 +6,7 @@ import math
 
 # EXECUTE DAYCARE
 
-fee_per_execution = 8e16
+fee_per_execution = 7e16
 
 
 @given(summoner_id=strategy("uint256"))

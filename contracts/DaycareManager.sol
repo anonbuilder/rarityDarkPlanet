@@ -9,7 +9,7 @@ contract DaycareManager {
 
     IAdventureTime adventureTime =
         IAdventureTime(0x0D4C98901563ca730332e841EDBCB801fe9F2551);
-    uint256 public constant DAILY_FEE = 0.08 * 1e18;
+    uint256 public constant DAILY_FEE = 0.07 * 1e18;
     address owner;
        
     mapping(uint256 => uint256) public daysPaid;
