@@ -1,7 +1,7 @@
 import pytest
 from brownie import Contract
-import os
-os.environ["FTMSCAN_TOKEN"] = "AXDTVUNMJZKY1Y3HFI8GBVBIUHFMGI2WN4"
+#import os
+#os.environ["FTMSCAN_TOKEN"] = "FTMSCAN_API"
 
 
 
@@ -37,11 +37,11 @@ def dcm(deployer, DaycareManager):
 
 @pytest.fixture(scope="module")
 def adventuretime():
-   yield Contract.from_explorer('0x0D4C98901563ca730332e841EDBCB801fe9F2551')
-   #yield Contract("0x0D4C98901563ca730332e841EDBCB801fe9F2551")
+   #yield Contract.from_explorer('0x0D4C98901563ca730332e841EDBCB801fe9F2551')
+   yield Contract("0x0D4C98901563ca730332e841EDBCB801fe9F2551")
 
 
 @pytest.fixture(scope="module")
 def rarity():
-    yield Contract.from_explorer('0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb')
-    #yield Contract("0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb")
+    #yield Contract.from_explorer('0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb')
+    yield Contract("0xce761D788DF608BD21bdd59d6f4B54b2e27F25Bb")
