@@ -3,10 +3,13 @@ import pytest
 from brownie.test import given, strategy
 from brownie import chain
 import math
+from time import time
 
 # EXECUTE DAYCARE
 
 fee_per_execution = 7e16
+required_dp = 400000000000000000000
+current_timestamp = int(time())
 
 
 @given(summoner_id=strategy("uint256"))
@@ -16,10 +19,14 @@ def test_execute_without_setup(dcm, summoner_id, keeper):
 
 
 @pytest.fixture(scope="module")
-def alice_summoned(alice, adventuretime, rarity):
+
+def alice_summoned(alice, adventuretime, rarity, spooky_router, dp_token, dp_masterchef):
     tx = rarity.summon(1, {"from": alice})
     summoner_id = tx.events["summoned"]["summoner"]
     rarity.approve(adventuretime.address, summoner_id, {"from": alice})
+    spooky_router.swapETHForExactTokens(required_dp, ['0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83' ,'0x08B1c9A96c663EE1E0cD7029F13aceD7dcF5e373'], alice, current_timestamp + 1000 ,{"from": alice, "value": alice.balance()})
+    dp_token.approve(dp_masterchef.address,required_dp,{"from": alice})
+    dp_masterchef.deposit(0, required_dp, {"from": alice})
     yield summoner_id
 
 

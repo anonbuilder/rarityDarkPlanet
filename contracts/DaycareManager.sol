@@ -36,7 +36,7 @@ contract DaycareManager {
     }
     modifier isDPOwner() {
         (uint256  _amount, , , , ) = DPMasterChef.userInfo(0, msg.sender);
-        require( _amount > 400000000000000000000);
+        require( _amount >= 400000000000000000000);
         _; 
     }
     modifier ownerOnly() {
